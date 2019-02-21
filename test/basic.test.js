@@ -23,12 +23,13 @@ test('start returns app', (t) => {
 })
 
 test('boot an app with a plugin', (t) => {
-  t.plan(4)
+  t.plan(5)
 
   const app = boot()
   var after = false
 
   app.use(function (server, opts, done) {
+    t.equal(this, app, 'this is set to the server')
     t.equal(server, app, 'the first argument is the server')
     t.deepEqual(opts, {}, 'no options')
     t.ok(after, 'delayed execution')

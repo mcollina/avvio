@@ -79,7 +79,7 @@ Plugin.prototype.exec = function (server, cb) {
     }, this.timeout)
   }
 
-  var promise = func(this.server, this.opts, done)
+  var promise = func.call(this.server, this.server, this.opts, done)
   if (promise && typeof promise.then === 'function') {
     debug('resolving promise', name)
     promise.then(
