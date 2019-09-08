@@ -200,6 +200,11 @@ Boot.prototype._addPlugin = function (plugin, opts, isAfter) {
     throw new Error('root plugin has already booted')
   }
 
+  const pluginMeta = plugin[Symbol.for('plugin-meta')]
+  if (pluginMeta && typeof pluginMeta.onRegister === 'function') {
+    pluginMeta.onRegister(this._server, opts)
+  }
+
   // we always add plugins to load at the current element
   const current = this._current[0]
 

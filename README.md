@@ -204,6 +204,20 @@ app.use(second, func)
 
 This is useful in cases where an injected variable from a plugin needs to be made available to another.
 
+If the meta data of a plugin contain a `onRegister(server, opts)` function, it will be executed synchronous before the plugin is being loaded: 
+
+```js
+async function plugin (app, opts) {
+  console.log(opts.list)
+})
+plugin[Symbol.for('plugin-meta')] = {
+  onRegister (app, opts) {  // this is a sync function, no callback and no promise
+    opts.list = ['foo', 'bar']
+  }
+}
+app.use(plugin)
+```
+
 -------------------------------------------------------
 <a name="error-handling"></a>
 #### Error handling
